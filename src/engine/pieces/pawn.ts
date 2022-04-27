@@ -11,7 +11,6 @@ export default class Pawn extends Piece {
 
     getAvailableMoves(board: Board) {
         // Move one square up, Yet to add limitation on existing pieces.
-        let currentPosition = board.findPiece(this);
         let movesAvailable = new MovesAvailable;
         if (this.player === "WHITE") {
             if (!board.getPiece(Square.at(this.getRow(board) + 1, this.getCol(board)))) {

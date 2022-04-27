@@ -1,3 +1,6 @@
+import Direction from "./pieces/direction";
+import gameSettings from "./gameSettings";
+
 export default class Square {
     constructor(public row: number, public col: number) {
     }
@@ -10,7 +13,15 @@ export default class Square {
         return !!otherSquare && this.row === otherSquare.row && this.col === otherSquare.col;
     }
 
+    offset(direction : Direction){
+        return Square.at(this.row + direction.rowOffset, this.col + direction.colOffset)
+    }
+
     toString(): string {
         return `Row ${this.row}, Col ${this.col}`;
+    }
+
+    inBounds(){
+        return (this.row >= 0 && this.row <= gameSettings.BOARD_SIZE - 1 && this.col >= 0 && this.col <= gameSettings.BOARD_SIZE - 1)
     }
 }

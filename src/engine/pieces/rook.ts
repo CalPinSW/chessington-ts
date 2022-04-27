@@ -3,6 +3,7 @@ import Board from "../board";
 import Player from "../player";
 import MovesAvailable from "./movesAvailable";
 import Square from "../square";
+import Direction from "./direction";
 
 export default class Rook extends Piece {
     constructor(player: Player) {
@@ -10,18 +11,18 @@ export default class Rook extends Piece {
     }
 
     getAvailableMoves(board: Board) {
-        let currentPosition = board.findPiece(this);
         let movesAvailable = new MovesAvailable;
-        for (let rowIndex = 0; rowIndex <= 7; rowIndex++){
-            for (let colIndex = 0; colIndex <= 7; colIndex++){
-                if (rowIndex === this.getRow(board) && colIndex !== this.getCol(board)){
-                    movesAvailable.add(rowIndex, colIndex);
-                }
-                if (colIndex === this.getCol(board) && rowIndex !== this.getRow(board)){
-                    movesAvailable.add(rowIndex, colIndex);
-                }
-            }
-        }
-        return  movesAvailable.list;
+        let direction : Direction = new Direction;
+        direction.up();
+        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        direction.down()
+        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        direction.left()
+        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        direction.right()
+        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        return movesAvailable.list;
     }
+
 }
+

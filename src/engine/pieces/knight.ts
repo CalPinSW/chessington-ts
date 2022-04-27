@@ -9,7 +9,6 @@ export default class Knight extends Piece {
     }
 
     getAvailableMoves(board: Board){
-        let currentPosition = board.findPiece(this);
         let movesAvailable = new MovesAvailable;
         for (let rowIndex = 0; rowIndex <= 7; rowIndex++) {
             for (let colIndex = 0; colIndex <= 7; colIndex++) {

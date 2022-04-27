@@ -2,6 +2,8 @@ import Piece from './piece';
 import Board from "../board";
 import Player from "../player";
 import MovesAvailable from "./movesAvailable";
+import Direction from "./direction";
+import Square from "../square";
 
 export default class King extends Piece {
     constructor(player: Player) {
@@ -9,15 +11,25 @@ export default class King extends Piece {
     }
 
     getAvailableMoves(board: Board) {
-        let currentPosition = board.findPiece(this);
         let movesAvailable = new MovesAvailable;
-        for (let rowIndex = Math.max(0, this.getRow(board) - 1); rowIndex <= Math.min(7, this.getRow(board) + 1); rowIndex++){
-            for (let colIndex = Math.max(0, this.getCol(board) - 1); colIndex <= Math.min(7, this.getCol(board) + 1); colIndex++){
-                if (rowIndex !== this.getRow(board) || colIndex !== this.getCol(board)){
-                        movesAvailable.add(rowIndex, colIndex);
+        let direction = new Direction;
+        for (let rowOffset = -1; rowOffset <= 1; rowOffset++){
+            for (let colOffset = -1; colOffset <= 1; colOffset++){
+                direction.set(rowOffset,colOffset)
+                if (board.findPiece(this).offset(direction).inBounds()){
+                    this.addMove(board, board.findPiece(this).offset(direction), movesAvailable);
                 }
             }
         }
+
         return  movesAvailable.list;
     }
+
+    addMove(board: Board, square : Square, movesAvailable : MovesAvailable) : MovesAvailable{
+        if(board.getPiece(square)?.player !== this.player){
+            movesAvailable.add(square.row, square.col)
+        }
+        return movesAvailable
+    }
+
 }
