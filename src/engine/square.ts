@@ -3,6 +3,7 @@ import gameSettings from "./gameSettings";
 import Board from "./board";
 import King from "./pieces/king";
 import Player from "./player"
+import Piece from "./pieces/piece";
 
 export default class Square {
     constructor(public row: number, public col: number) {
@@ -28,7 +29,11 @@ export default class Square {
         return (this.row >= 0 && this.row <= gameSettings.BOARD_SIZE - 1 && this.col >= 0 && this.col <= gameSettings.BOARD_SIZE - 1)
     }
 
+    isPossibleToMoveTo (board : Board, player: Player){
+        return this.inBounds() && board.getPiece(this)?.player !== player && !(board.getPiece(this) instanceof King);
+    }
+
     isTakeable (board : Board, player: Player){
-        return board.getPiece(this)?.player !== player && !(board.getPiece(this) instanceof King);
+        return (this.isPossibleToMoveTo(board, player) && (board.getPiece(this) instanceof Piece) );
     }
 }

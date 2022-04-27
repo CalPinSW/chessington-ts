@@ -11,15 +11,12 @@ export default class Bishop extends Piece {
 
     getAvailableMoves(board: Board) {
         let movesAvailable = new MovesAvailable;
-        let direction : Direction = new Direction;
-        direction.NE();
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.SE()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.NW()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.SW()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        //Don't modify movesAvailable in addMoves.
+        this.addMoves(board, this.square(board).offset(Direction.NW()), movesAvailable, Direction.NW());
+        this.addMoves(board, this.square(board).offset(Direction.SW()), movesAvailable, Direction.SW());
+        this.addMoves(board, this.square(board).offset(Direction.SE()), movesAvailable, Direction.SE());
+        this.addMoves(board, this.square(board).offset(Direction.NE()), movesAvailable, Direction.NE());
+
         return movesAvailable.list;
     }
 }

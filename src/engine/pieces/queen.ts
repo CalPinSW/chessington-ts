@@ -11,12 +11,10 @@ export default class Queen extends Piece {
 
     getAvailableMoves(board: Board) {
         let movesAvailable = new MovesAvailable;
-        let direction : Direction = new Direction;
         for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
             for (let colOffset = -1; colOffset <= 1; colOffset++) {
                 if (rowOffset !== 0 || colOffset !== 0){
-                    direction.set(rowOffset, colOffset);
-                    this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+                    this.addMoves(board, board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)), movesAvailable, Direction.Custom(rowOffset,colOffset));
                 }
             }
         }

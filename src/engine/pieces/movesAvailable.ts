@@ -6,4 +6,7 @@ export default class MovesAvailable {
     add(row: number, col: number) {
         this.list.push(Square.at(row, col));
     }
+    addSquare(square: Square) {
+        this.list.push(square);
+    }
 }

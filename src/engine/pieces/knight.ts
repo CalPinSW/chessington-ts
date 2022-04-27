@@ -15,7 +15,7 @@ export default class Knight extends Piece {
             for (let colIndex = 0; colIndex <= 7; colIndex++) {
                 if (rowIndex !== this.getRow(board) && colIndex !== this.getCol(board) &&
                     Math.abs(rowIndex - this.getRow(board)) + Math.abs(colIndex - this.getCol(board)) === 3) {
-                    if (Square.at(rowIndex, colIndex).isTakeable(board,this.player)){
+                    if (Square.at(rowIndex, colIndex).isPossibleToMoveTo(board,this.player)){
                         movesAvailable.add(rowIndex, colIndex);
                     }
 

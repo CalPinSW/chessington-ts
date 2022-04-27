@@ -1,12 +1,14 @@
 import Piece from './piece';
 import Board from "../board";
-import Player from "../player";
+import Player, {getForwardDirection, getForwardLeftDirection, getForwardRightDirection} from "../player";
 import MovesAvailable from "./movesAvailable";
-import Square from "../square";
 import Direction from "./direction";
 import gameSettings from "../gameSettings";
+import player from "../player";
 
 export default class Pawn extends Piece {
+    enPessantAllowed : boolean = true;
+
     constructor(player: Player) {
         super(player);
     }
@@ -14,51 +16,58 @@ export default class Pawn extends Piece {
     getAvailableMoves(board: Board) {
         // Move one square up, Yet to add limitation on existing pieces.
         let movesAvailable = new MovesAvailable;
-        let direction = new Direction();
         let startRow : number;
-        if (this.player === "WHITE") {
-            direction.up()
+        if (this.player === Player.WHITE) {
             startRow = 1;
         }
         else {
-            direction.down()
             startRow = gameSettings.BOARD_SIZE - 2;
         }
 
-
-        if (this.square(board).offset(direction).inBounds() && !board.getPiece(this.square(board).offset(direction))){
-            movesAvailable.add(this.getRow(board) + direction.rowOffset, this.getCol(board));
+        //forward moves
+        const forward = getForwardDirection(this.player);
+        if (this.square(board).offset(forward).inBounds() && !board.getPiece(this.square(board).offset(forward))){
+            movesAvailable.add(this.getRow(board) + forward.rowOffset, this.getCol(board));
             if (this.getRow(board) === startRow){
-                if (this.square(board).offset(direction).offset(direction).inBounds() && !board.getPiece(this.square(board).offset(direction).offset(direction))){
-                    movesAvailable.add(this.getRow(board) + (2 * direction.rowOffset), this.getCol(board));
+                if (this.square(board).offset(forward).offset(forward).inBounds() && !board.getPiece(this.square(board).offset(forward).offset(forward))){
+                    movesAvailable.addSquare(this.square(board).offset(forward).offset(forward));
                 }
             }
 
         }
-        /*if (this.player === "WHITE") {
-            if (!board.getPiece(Square.at(this.getRow(board) + 1, this.getCol(board)))) {
-                movesAvailable.add(this.getRow(board) + 1, this.getCol(board));
 
-                if (this.getRow(board) === 1) {
-                    if (!board.getPiece(Square.at(this.getRow(board) + 2, this.getCol(board)))) {
-                        movesAvailable.add(this.getRow(board) + 2, this.getCol(board));
-                    }
-                }
+        // Diagonal taking
+        const forwardRight = getForwardRightDirection(this.player);
+        if (this.square(board).offset(forwardRight).isTakeable(board,this.player)){
+            movesAvailable.addSquare(this.square(board).offset(forwardRight));
+        }
+        const forwardLeft = getForwardLeftDirection(this.player);
+        if (this.square(board).offset(forwardLeft).isTakeable(board,this.player)){
+            movesAvailable.addSquare(this.square(board).offset(forwardLeft));
+        }
+        return movesAvailable.list;
+        /*if (this.player === Player.WHITE) {
+            direction.NW()
+            if (this.square(board).offset(direction).isTakeable(board,this.player)){
+                movesAvailable.addSquare(this.square(board).offset(direction));
             }
-
-        } else {
-            if (!board.getPiece(Square.at(this.getRow(board) - 1, this.getCol(board)))) {
-                movesAvailable.add(this.getRow(board) - 1, this.getCol(board));
-
-                if (this.getRow(board) === 6) {
-                    if (!board.getPiece(Square.at(this.getRow(board) - 2, this.getCol(board)))) {
-                        movesAvailable.add(this.getRow(board) - 2, this.getCol(board));
-                    }
-                }
+            direction.NE()
+            if (this.square(board).offset(direction).isTakeable(board,this.player)){
+                movesAvailable.addSquare(this.square(board).offset(direction));
+            }
+        }
+        else {
+            direction.SW()
+            if (this.square(board).offset(direction).isTakeable(board,this.player)){
+                movesAvailable.addSquare(this.square(board).offset(direction));
+            }
+            direction.SE()
+            if (this.square(board).offset(direction).isTakeable(board,this.player)){
+                movesAvailable.addSquare(this.square(board).offset(direction));
             }
         }*/
-        return movesAvailable.list;
-        //return new Array(0);
+
+
     }
 }
 

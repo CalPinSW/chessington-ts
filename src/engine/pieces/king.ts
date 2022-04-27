@@ -12,12 +12,10 @@ export default class King extends Piece {
 
     getAvailableMoves(board: Board) {
         let movesAvailable = new MovesAvailable;
-        let direction = new Direction;
         for (let rowOffset = -1; rowOffset <= 1; rowOffset++){
             for (let colOffset = -1; colOffset <= 1; colOffset++){
-                direction.set(rowOffset,colOffset)
-                if (board.findPiece(this).offset(direction).inBounds()){
-                    this.addMove(board, board.findPiece(this).offset(direction), movesAvailable);
+                if (board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)).inBounds()){
+                    this.addMove(board, board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)), movesAvailable);
                 }
             }
         }
@@ -26,7 +24,7 @@ export default class King extends Piece {
     }
 
     addMove(board: Board, square : Square, movesAvailable : MovesAvailable) : MovesAvailable{
-        if(square.isTakeable(board,this.player)){
+        if(square.isPossibleToMoveTo(board,this.player)){
             movesAvailable.add(square.row, square.col)
         }
         return movesAvailable

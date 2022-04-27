@@ -32,7 +32,7 @@ export default class Piece {
                 movesAvailable.add(square.row, square.col);
                 this.addMoves(board, square.offset(direction), movesAvailable, direction)
             }
-            else if (square.isTakeable(board,this.player)){
+            else if (square.isPossibleToMoveTo(board,this.player)){
                 movesAvailable.add(square.row, square.col);
                 return movesAvailable;
             }
@@ -40,8 +40,8 @@ export default class Piece {
         return movesAvailable
     }
 
-    isPieceAtSquareOfBoard(board: Board, square: Square) {
-        return board.getPiece(square);
+    isPieceAtSquareOfBoard(board: Board, square: Square) : boolean {
+        return board.getPiece(square) instanceof Piece;
     }
 
     square(board: Board) : Square{

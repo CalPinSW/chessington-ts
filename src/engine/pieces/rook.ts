@@ -12,15 +12,10 @@ export default class Rook extends Piece {
 
     getAvailableMoves(board: Board) {
         let movesAvailable = new MovesAvailable;
-        let direction : Direction = new Direction;
-        direction.up();
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.down()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.left()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
-        direction.right()
-        this.addMoves(board, board.findPiece(this).offset(direction), movesAvailable, direction);
+        this.addMoves(board, board.findPiece(this).offset(Direction.up()), movesAvailable, Direction.up());
+        this.addMoves(board, board.findPiece(this).offset(Direction.down()), movesAvailable, Direction.down());
+        this.addMoves(board, board.findPiece(this).offset(Direction.left()), movesAvailable, Direction.left());
+        this.addMoves(board, board.findPiece(this).offset(Direction.right()), movesAvailable, Direction.right());
         return movesAvailable.list;
     }
 

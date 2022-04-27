@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="4a49c57d-1bd7-4773-aaf3-5bf9e84777ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/bishop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/bishop.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/direction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/direction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/king.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/king.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/knight.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/knight.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/movesAvailable.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/movesAvailable.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/pawn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/pawn.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/pieces/piece.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/piece.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/player.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/player.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/square.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/square.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +50,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.mocha.mocha_node_package_dir": "C:/Training/chessington-ts/node_modules/mocha",
     "nodejs_package_manager_path": "npm",
     "ts.external.directory.path": "C:\\Training\\chessington-ts\\node_modules\\typescript\\lib"
   }
@@ -52,7 +61,30 @@
       <recent name="C:\Training\chessington-ts\src\engine\pieces\movesAvailable.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.All Tests" />
+  <component name="RunManager" selected="Mocha.All Tests">
+    <configuration name="Pawn.white pawns.cannot move at the top of the board" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options>--require ts-node/register</extra-mocha-options>
+      <test-kind>TEST</test-kind>
+      <test-file>$PROJECT_DIR$/tests/engine/pieces/pawn.spec.ts</test-file>
+      <test-names>
+        <name value="Pawn" />
+        <name value="white pawns" />
+        <name value="cannot move at the top of the board" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Mocha.Pawn.white pawns.cannot move at the top of the board" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -61,7 +93,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1651046238417</updated>
-      <workItem from="1651046241025" duration="16484000" />
+      <workItem from="1651046241025" duration="21913000" />
     </task>
     <servers />
   </component>
