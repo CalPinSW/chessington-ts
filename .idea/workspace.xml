@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a49c57d-1bd7-4773-aaf3-5bf9e84777ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/engine/pieces/movesAvailable.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/pieces/pawn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/pawn.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/pieces/rook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/rook.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/pieces/bishop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/pieces/bishop.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +14,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="209c0a50-5ecb-4537-8a84-f8fa9ea90093" />
+        <option name="url" value="https://github.com/CalPinSW/chessington-ts.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -53,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1651046238417</updated>
-      <workItem from="1651046241025" duration="3240000" />
+      <workItem from="1651046241025" duration="3681000" />
     </task>
     <servers />
   </component>
