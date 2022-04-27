@@ -14,4 +14,12 @@ export default class Piece {
         const currentSquare = board.findPiece(this);
         board.movePiece(currentSquare, newSquare);
     }
+
+    getRow(board: Board){
+        return board.findPiece(this).row
+    }
+
+    getCol(board: Board){
+        return board.findPiece(this).col
+    }
 }
