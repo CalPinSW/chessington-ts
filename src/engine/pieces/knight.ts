@@ -13,7 +13,8 @@ export default class Knight extends Piece {
         let movesAvailable = new MovesAvailable;
         for (let rowIndex = 0; rowIndex <= 7; rowIndex++) {
             for (let colIndex = 0; colIndex <= 7; colIndex++) {
-                if (rowIndex !== currentPosition.row && colIndex !== currentPosition.col && Math.abs(rowIndex - currentPosition.row) + Math.abs(colIndex - currentPosition.col) === 3) {
+                if (rowIndex !== currentPosition.row && colIndex !== currentPosition.col &&
+                    Math.abs(rowIndex - currentPosition.row) + Math.abs(colIndex - currentPosition.col) === 3) {
                     movesAvailable.add(rowIndex, colIndex);
                 }
             }

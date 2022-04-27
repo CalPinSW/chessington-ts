@@ -14,7 +14,8 @@ export default class Queen extends Piece {
         for (let rowIndex = 0; rowIndex <= 7; rowIndex++){
             for (let colIndex = 0; colIndex <= 7; colIndex++){
                 if (rowIndex !== currentPosition.row || colIndex !== currentPosition.col){
-                    if (Math.abs(rowIndex - currentPosition.row) === Math.abs(colIndex - currentPosition.col) || rowIndex === currentPosition.row || colIndex === currentPosition.col){
+                    if (Math.abs(rowIndex - currentPosition.row) === Math.abs(colIndex - currentPosition.col)
+                        || rowIndex === currentPosition.row || colIndex === currentPosition.col){
                         movesAvailable.add(rowIndex, colIndex);
                     }
 
