@@ -26,7 +26,7 @@ export default class King extends Piece {
     }
 
     addMove(board: Board, square : Square, movesAvailable : MovesAvailable) : MovesAvailable{
-        if(board.getPiece(square)?.player !== this.player){
+        if(square.isTakeable(board,this.player)){
             movesAvailable.add(square.row, square.col)
         }
         return movesAvailable

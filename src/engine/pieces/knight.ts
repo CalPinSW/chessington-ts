@@ -2,6 +2,7 @@ import Piece from './piece';
 import Board from "../board";
 import Player from "../player";
 import MovesAvailable from "./movesAvailable";
+import Square from "../square";
 
 export default class Knight extends Piece {
     constructor(player: Player) {
@@ -14,7 +15,10 @@ export default class Knight extends Piece {
             for (let colIndex = 0; colIndex <= 7; colIndex++) {
                 if (rowIndex !== this.getRow(board) && colIndex !== this.getCol(board) &&
                     Math.abs(rowIndex - this.getRow(board)) + Math.abs(colIndex - this.getCol(board)) === 3) {
-                    movesAvailable.add(rowIndex, colIndex);
+                    if (Square.at(rowIndex, colIndex).isTakeable(board,this.player)){
+                        movesAvailable.add(rowIndex, colIndex);
+                    }
+
                 }
             }
         }

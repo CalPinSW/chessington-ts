@@ -1,5 +1,8 @@
 import Direction from "./pieces/direction";
 import gameSettings from "./gameSettings";
+import Board from "./board";
+import King from "./pieces/king";
+import Player from "./player"
 
 export default class Square {
     constructor(public row: number, public col: number) {
@@ -23,5 +26,9 @@ export default class Square {
 
     inBounds(){
         return (this.row >= 0 && this.row <= gameSettings.BOARD_SIZE - 1 && this.col >= 0 && this.col <= gameSettings.BOARD_SIZE - 1)
+    }
+
+    isTakeable (board : Board, player: Player){
+        return board.getPiece(this)?.player !== player && !(board.getPiece(this) instanceof King);
     }
 }

@@ -25,13 +25,14 @@ export default class Piece {
         return board.findPiece(this).col
     }
 
+
     addMoves(board: Board, square: Square, movesAvailable: MovesAvailable, direction: Direction): MovesAvailable {
         if (square.inBounds()) {
             if (!this.isPieceAtSquareOfBoard(board, square)) {
                 movesAvailable.add(square.row, square.col);
                 this.addMoves(board, square.offset(direction), movesAvailable, direction)
             }
-            else if (board.getPiece(square)?.player !== this.player){
+            else if (square.isTakeable(board,this.player)){
                 movesAvailable.add(square.row, square.col);
                 return movesAvailable;
             }
