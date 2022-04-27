@@ -42,4 +42,8 @@ export default class Piece {
     isPieceAtSquareOfBoard(board: Board, square: Square) {
         return board.getPiece(square);
     }
+
+    square(board: Board) : Square{
+        return board.findPiece(this)
+    }
 }
