@@ -14,8 +14,8 @@ export default class King extends Piece {
         let movesAvailable = new MovesAvailable;
         for (let rowOffset = -1; rowOffset <= 1; rowOffset++){
             for (let colOffset = -1; colOffset <= 1; colOffset++){
-                if (board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)).inBounds()){
-                    this.addMove(board, board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)), movesAvailable);
+                if (board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)).isNotOccupiedBySamePlayerPieceOrKing(board, this.player)){
+                    movesAvailable.addSquare(board.findPiece(this).offset(Direction.Custom(rowOffset,colOffset)))
                 }
             }
         }
@@ -23,11 +23,5 @@ export default class King extends Piece {
         return  movesAvailable.list;
     }
 
-    addMove(board: Board, square : Square, movesAvailable : MovesAvailable) : MovesAvailable{
-        if(square.isPossibleToMoveTo(board,this.player)){
-            movesAvailable.add(square.row, square.col)
-        }
-        return movesAvailable
-    }
 
 }

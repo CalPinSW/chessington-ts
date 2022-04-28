@@ -29,11 +29,15 @@ export default class Square {
         return (this.row >= 0 && this.row <= gameSettings.BOARD_SIZE - 1 && this.col >= 0 && this.col <= gameSettings.BOARD_SIZE - 1)
     }
 
-    isPossibleToMoveTo (board : Board, player: Player){
+    isEmptySquare(board : Board) : boolean{
+        return (this.inBounds() && !(board.getPiece(this) instanceof Piece));
+    }
+
+    isNotOccupiedBySamePlayerPieceOrKing (board : Board, player: Player){
         return this.inBounds() && board.getPiece(this)?.player !== player && !(board.getPiece(this) instanceof King);
     }
 
     isTakeable (board : Board, player: Player){
-        return (this.isPossibleToMoveTo(board, player) && (board.getPiece(this) instanceof Piece) );
+        return (this.isNotOccupiedBySamePlayerPieceOrKing(board, player) && (board.getPiece(this) instanceof Piece) );
     }
 }

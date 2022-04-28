@@ -15,59 +15,39 @@ export default class Pawn extends Piece {
 
     getAvailableMoves(board: Board) {
         // Move one square up, Yet to add limitation on existing pieces.
-        let movesAvailable = new MovesAvailable;
         let startRow : number;
-        if (this.player === Player.WHITE) {
-            startRow = 1;
-        }
-        else {
-            startRow = gameSettings.BOARD_SIZE - 2;
-        }
 
-        //forward moves
+        startRow = this.player === Player.WHITE ? 1 : gameSettings.BOARD_SIZE - 2;
+        return [...this.getForwardMoves(board, startRow).list, ...this.getDiagonalMoves(board).list]
+
+    }
+
+    getForwardMoves (board: Board, startRow : number) : MovesAvailable {
+        let forwardMoves : MovesAvailable = new MovesAvailable();
         const forward = getForwardDirection(this.player);
-        if (this.square(board).offset(forward).inBounds() && !board.getPiece(this.square(board).offset(forward))){
-            movesAvailable.add(this.getRow(board) + forward.rowOffset, this.getCol(board));
+        if (this.square(board).offset(forward).isEmptySquare(board)){
+            forwardMoves.add(this.getRow(board) + forward.rowOffset, this.getCol(board));
             if (this.getRow(board) === startRow){
-                if (this.square(board).offset(forward).offset(forward).inBounds() && !board.getPiece(this.square(board).offset(forward).offset(forward))){
-                    movesAvailable.addSquare(this.square(board).offset(forward).offset(forward));
+                if (this.square(board).offset(forward).offset(forward).isEmptySquare(board)){
+                    forwardMoves.addSquare(this.square(board).offset(forward).offset(forward));
                 }
             }
 
         }
+        return forwardMoves
+    }
 
-        // Diagonal taking
+    getDiagonalMoves (board: Board) : MovesAvailable{
+        let diagonalMoves : MovesAvailable = new MovesAvailable();
         const forwardRight = getForwardRightDirection(this.player);
         if (this.square(board).offset(forwardRight).isTakeable(board,this.player)){
-            movesAvailable.addSquare(this.square(board).offset(forwardRight));
+            diagonalMoves.addSquare(this.square(board).offset(forwardRight));
         }
         const forwardLeft = getForwardLeftDirection(this.player);
         if (this.square(board).offset(forwardLeft).isTakeable(board,this.player)){
-            movesAvailable.addSquare(this.square(board).offset(forwardLeft));
+            diagonalMoves.addSquare(this.square(board).offset(forwardLeft));
         }
-        return movesAvailable.list;
-        /*if (this.player === Player.WHITE) {
-            direction.NW()
-            if (this.square(board).offset(direction).isTakeable(board,this.player)){
-                movesAvailable.addSquare(this.square(board).offset(direction));
-            }
-            direction.NE()
-            if (this.square(board).offset(direction).isTakeable(board,this.player)){
-                movesAvailable.addSquare(this.square(board).offset(direction));
-            }
-        }
-        else {
-            direction.SW()
-            if (this.square(board).offset(direction).isTakeable(board,this.player)){
-                movesAvailable.addSquare(this.square(board).offset(direction));
-            }
-            direction.SE()
-            if (this.square(board).offset(direction).isTakeable(board,this.player)){
-                movesAvailable.addSquare(this.square(board).offset(direction));
-            }
-        }*/
-
-
+        return diagonalMoves;
     }
 }
 

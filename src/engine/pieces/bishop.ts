@@ -10,13 +10,6 @@ export default class Bishop extends Piece {
     }
 
     getAvailableMoves(board: Board) {
-        let movesAvailable = new MovesAvailable;
-        //Don't modify movesAvailable in addMoves.
-        this.addMoves(board, this.square(board).offset(Direction.NW()), movesAvailable, Direction.NW());
-        this.addMoves(board, this.square(board).offset(Direction.SW()), movesAvailable, Direction.SW());
-        this.addMoves(board, this.square(board).offset(Direction.SE()), movesAvailable, Direction.SE());
-        this.addMoves(board, this.square(board).offset(Direction.NE()), movesAvailable, Direction.NE());
-
-        return movesAvailable.list;
+        return this.getAllPossibleDiagonalMovesFromSquare(board, this.square(board)).list;
     }
 }

@@ -3,6 +3,7 @@ import Board from "../board";
 import Player from "../player";
 import MovesAvailable from "./movesAvailable";
 import Square from "../square";
+import Direction from "./direction";
 
 export default class Knight extends Piece {
     constructor(player: Player) {
@@ -11,14 +12,13 @@ export default class Knight extends Piece {
 
     getAvailableMoves(board: Board){
         let movesAvailable = new MovesAvailable;
-        for (let rowIndex = 0; rowIndex <= 7; rowIndex++) {
-            for (let colIndex = 0; colIndex <= 7; colIndex++) {
-                if (rowIndex !== this.getRow(board) && colIndex !== this.getCol(board) &&
-                    Math.abs(rowIndex - this.getRow(board)) + Math.abs(colIndex - this.getCol(board)) === 3) {
-                    if (Square.at(rowIndex, colIndex).isPossibleToMoveTo(board,this.player)){
-                        movesAvailable.add(rowIndex, colIndex);
+        for (let rowOffset = -2; rowOffset <= 2; rowOffset++){
+            for (let colOffset =-2; colOffset <= 2; colOffset++){
+                if ((Math.abs(rowOffset) + Math.abs(colOffset)) === 3 && (rowOffset != 0) && (colOffset != 0)){
+                    const targetSquare = this.square(board).offset(Direction.Custom(rowOffset, colOffset));
+                    if (targetSquare.isNotOccupiedBySamePlayerPieceOrKing(board, this.player)) {
+                        movesAvailable.addSquare(this.square(board).offset(Direction.Custom(rowOffset, colOffset)));
                     }
-
                 }
             }
         }

@@ -26,20 +26,37 @@ export default class Piece {
     }
 
 
-    addMoves(board: Board, square: Square, movesAvailable: MovesAvailable, direction: Direction): MovesAvailable {
+    recursivelyAddMovesInDirection(board: Board, square: Square, direction: Direction): MovesAvailable {
+        let newMoves : MovesAvailable = new MovesAvailable();
         if (square.inBounds()) {
             if (!this.isPieceAtSquareOfBoard(board, square)) {
-                movesAvailable.add(square.row, square.col);
-                this.addMoves(board, square.offset(direction), movesAvailable, direction)
+                newMoves.addSquare(square);
+                newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(direction), direction))
             }
-            else if (square.isPossibleToMoveTo(board,this.player)){
-                movesAvailable.add(square.row, square.col);
-                return movesAvailable;
+            else if (square.isNotOccupiedBySamePlayerPieceOrKing(board,this.player)){
+                newMoves.addSquare(square);
+                return newMoves;
             }
         }
-        return movesAvailable
+        return newMoves
     }
 
+    getAllPossibleLateralMovesFromSquare(board: Board, square: Square) {
+        let newMoves : MovesAvailable = new MovesAvailable();
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.up()), Direction.up()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.down()), Direction.down()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.left()), Direction.left()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.right()), Direction.right()));
+        return newMoves;
+    }
+    getAllPossibleDiagonalMovesFromSquare(board: Board, square: Square) : MovesAvailable {
+        let newMoves : MovesAvailable = new MovesAvailable();
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.NW()), Direction.NW()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.SW()), Direction.SW()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.NE()), Direction.NE()));
+        newMoves.addMovesList(this.recursivelyAddMovesInDirection(board, square.offset(Direction.SE()), Direction.SE()));
+        return newMoves;
+    }
     isPieceAtSquareOfBoard(board: Board, square: Square) : boolean {
         return board.getPiece(square) instanceof Piece;
     }
