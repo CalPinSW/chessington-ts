@@ -18,3 +18,11 @@ export function getForwardRightDirection(player: Player): Direction {
 export function getForwardLeftDirection(player: Player): Direction {
     return player === Player.WHITE ? Direction.NW() : Direction.SE()
 }
+
+export function getRightDirection(player: Player): Direction {
+    return player === Player.WHITE ? Direction.right() : Direction.left()
+}
+
+export function getLeftDirection(player: Player): Direction {
+    return player === Player.WHITE ? Direction.left() : Direction.right()
+}

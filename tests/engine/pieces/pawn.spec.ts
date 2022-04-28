@@ -5,6 +5,7 @@ import King from '../../../src/engine/pieces/king';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import {expect} from "chai";
 
 describe('Pawn', () => {
 
@@ -176,7 +177,7 @@ describe('Pawn', () => {
         moves.should.be.empty;
     });
 
-    it('cannot move two squares if there is a piece two sqaures in front', () => {
+    it('cannot move two squares if there is a piece two squares in front', () => {
         const pawn = new Pawn(Player.BLACK);
         const blockingPiece = new Rook(Player.WHITE);
         board.setPiece(Square.at(6, 3), pawn);
@@ -187,4 +188,53 @@ describe('Pawn', () => {
         moves.should.not.deep.include(Square.at(4, 3));
     });
 
+    it('en passant value is true after 2 moves from start row', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const takeablePiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(3, 3), pawn);
+        board.setPiece(Square.at(1, 2), takeablePiece);
+
+        board.movePiece(Square.at(1, 2), Square.at(3, 2));
+
+        takeablePiece.enPessantAllowed.should.equal(true)
+    });
+    it('can perform en passant if diagonal opposing pawn has moved forward two squares in one move', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const takeablePiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(3, 3), pawn);
+        board.setPiece(Square.at(1, 2), takeablePiece);
+
+        board.movePiece(Square.at(1, 2), Square.at(3, 2));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(2, 2));
+    });
+    it('opposing piece should be taken on en passant', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const takeablePiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(3, 3), pawn);
+        board.setPiece(Square.at(1, 2), takeablePiece);
+
+        board.movePiece(Square.at(1, 2), Square.at(3, 2));
+        board.movePiece(Square.at(3, 3), Square.at(2, 2));
+
+        expect(board.getPiece(Square.at(3,2))).to.be.undefined
+    });
+
+
+    it('cannot perform en passant if diagonal opposing pawn has moved forward two squares in two moves', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const takeablePiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(3, 3), pawn);
+        board.setPiece(Square.at(1, 2), takeablePiece);
+
+        board.movePiece(Square.at(1, 2), Square.at(2, 2));
+        board.movePiece(Square.at(3, 3), Square.at(2, 3));
+        board.movePiece(Square.at(2, 2), Square.at(3, 2));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(2, 2));
+    });
 });

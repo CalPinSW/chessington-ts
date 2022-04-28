@@ -1,24 +1,34 @@
 import Piece from './piece';
 import Board from "../board";
-import Player, {getForwardDirection, getForwardLeftDirection, getForwardRightDirection} from "../player";
+import Player, {
+    getForwardDirection,
+    getForwardLeftDirection,
+    getForwardRightDirection,
+    getLeftDirection, getRightDirection
+} from "../player";
 import MovesAvailable from "./movesAvailable";
 import Direction from "./direction";
 import gameSettings from "../gameSettings";
 import player from "../player";
+import Square from "../square";
 
 export default class Pawn extends Piece {
-    enPessantAllowed : boolean = true;
+    enPessantAllowed : boolean = false;
 
     constructor(player: Player) {
         super(player);
     }
 
+    updateEnPassant(fromSquare: Square, toSquare: Square){
+        if (Math.abs(fromSquare.row - toSquare.row) === 2){
+            this.enPessantAllowed = true;
+        }
+    }
+
     getAvailableMoves(board: Board) {
         // Move one square up, Yet to add limitation on existing pieces.
-        let startRow : number;
-
-        startRow = this.player === Player.WHITE ? 1 : gameSettings.BOARD_SIZE - 2;
-        return [...this.getForwardMoves(board, startRow).list, ...this.getDiagonalMoves(board).list]
+        let startRow = this.player === Player.WHITE ? 1 : gameSettings.BOARD_SIZE - 2;
+        return [...this.getForwardMoves(board, startRow).list, ...this.getDiagonalMoves(board).list, ...this.getEnPassantMoves(board).list]
 
     }
 
@@ -48,6 +58,24 @@ export default class Pawn extends Piece {
             diagonalMoves.addSquare(this.square(board).offset(forwardLeft));
         }
         return diagonalMoves;
+    }
+
+    getEnPassantMoves (board: Board) : MovesAvailable{
+        let EnPassantMoves : MovesAvailable = new MovesAvailable();
+        let maybePawn : Piece | undefined;
+        maybePawn = board.getPiece(this.square(board).offset(getLeftDirection(this.player)))
+        if (maybePawn instanceof Pawn){
+            if (maybePawn.enPessantAllowed) {
+                EnPassantMoves.addSquare(this.square(board).offset(getForwardLeftDirection(this.player)))
+            }
+        }
+        maybePawn = board.getPiece(this.square(board).offset(getRightDirection(this.player)))
+        if (maybePawn instanceof Pawn){
+            if (maybePawn.enPessantAllowed) {
+                EnPassantMoves.addSquare(this.square(board).offset(getForwardRightDirection(this.player)))
+            }
+        }
+        return EnPassantMoves;
     }
 }
 

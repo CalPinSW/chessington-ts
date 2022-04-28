@@ -1,7 +1,8 @@
-import Player from './player';
+import Player, {getForwardLeftDirection, getForwardRightDirection, getLeftDirection, getRightDirection} from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
 import Piece from "./pieces/piece";
+import Pawn from "./pieces/pawn";
 
 export default class Board {
     private readonly board: (Piece | undefined)[][];
@@ -40,11 +41,35 @@ export default class Board {
     }
 
     movePiece(fromSquare: Square, toSquare: Square) {
-        const movingPiece = this.getPiece(fromSquare);        
+        const movingPiece = this.getPiece(fromSquare);
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {
+            this.resetEnPassantSettings();
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
+            if (movingPiece instanceof Pawn){
+                movingPiece.updateEnPassant(fromSquare, toSquare);
+                this.takeOnEnPessant(fromSquare, toSquare);
+            }
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
+        }
+    }
+    takeOnEnPessant(fromSquare: Square, toSquare : Square){
+        if (toSquare.equals(fromSquare.offset(getForwardRightDirection(this.currentPlayer)))){
+            this.setPiece(fromSquare.offset(getRightDirection(this.currentPlayer)), undefined);
+        }
+        if (toSquare.equals(fromSquare.offset(getForwardLeftDirection(this.currentPlayer)))){
+            this.setPiece(fromSquare.offset(getLeftDirection(this.currentPlayer)), undefined);
+        }
+    }
+
+    resetEnPassantSettings(){
+        for (let row = 0; row < this.board.length; row++) {
+            for (let col = 0; col < this.board[row].length; col++) {
+                let maybePawn = this.getPiece(Square.at(row,col));
+                if (maybePawn instanceof Pawn) {
+                    maybePawn.enPessantAllowed = false;
+                }
+            }
         }
     }
 }
